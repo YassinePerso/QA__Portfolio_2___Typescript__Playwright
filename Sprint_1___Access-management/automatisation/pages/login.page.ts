@@ -1,0 +1,37 @@
+import { Page, Locator } from '@playwright/test';
+import { BasePage } from './base.page';
+
+export class LoginPage extends BasePage {
+  readonly emailInput: Locator;
+  readonly passwordInput: Locator;
+  readonly submitButton: Locator;
+
+  constructor(page: Page) {
+    super(page);
+    this.emailInput = page.getByPlaceholder('Votre email');
+    this.passwordInput = page.getByPlaceholder('Votre mot de passe');
+    this.submitButton = page.getByRole('button', { name: 'Connexion' });
+  }
+
+  // Fill email input
+  async fillEmail(email: string): Promise<void> {
+    await this.emailInput.fill(email);
+  }
+
+  // Fill password input
+  async fillPassword(password: string): Promise<void> {
+    await this.passwordInput.fill(password);
+  }
+  
+  // Click on submit button
+  async clickSubmit(): Promise<void> {
+    await this.submitButton.click();
+  }
+
+  // Complete login action
+  async login(email: string, password: string): Promise<void> {
+    await this.fillEmail(email);
+    await this.fillPassword(password);
+    await this.clickSubmit();
+  }
+}
