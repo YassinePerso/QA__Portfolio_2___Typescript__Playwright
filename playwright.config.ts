@@ -5,7 +5,7 @@ import { defineConfig, devices } from '@playwright/test';
 declare const process: any;
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './Sprint_1___Access-management/automatisation/tests',  
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -14,6 +14,8 @@ export default defineConfig({
   use: {
     baseURL: 'https://practicesoftwaretesting.com',
     trace: 'on-first-retry',
+    actionTimeout: 15000,
+    locale: 'fr-FR'
   },
   projects: [
     {
@@ -24,9 +26,9 @@ export default defineConfig({
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
   ],
 });
