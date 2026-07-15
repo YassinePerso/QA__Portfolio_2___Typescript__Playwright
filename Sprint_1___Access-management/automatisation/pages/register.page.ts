@@ -18,19 +18,20 @@ export class RegisterPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.firstnameInput = page.getByPlaceholder('Prénom *');
-    this.lastnameInput = page.getByPlaceholder('Votre nom de famille *');
-    this.birthdateInput = page.getByPlaceholder('YYYY-MM-DD');
-    this.countrySelect = page.getByRole('combobox');
-    this.postalcodeInput = page.getByPlaceholder('Votre code postal *');
-    this.streetnumberInput = page.getByPlaceholder('ex. 42 *');
-    this.streetnameInput = page.getByPlaceholder('Votre rue *');
-    this.cityInput = page.getByPlaceholder('Votre ville *');
-    this.stateInput = page.getByPlaceholder('Votre état *');
-    this.phonenumberInput = page.getByPlaceholder('Votre téléphone *');
-    this.emailInput = page.getByPlaceholder('Votre email *');
-    this.passwordInput = page.getByPlaceholder('Votre mot de passe');
+    this.firstnameInput = page.locator('[data-test="first-name"]');
+    this.lastnameInput = page.locator('[data-test="last-name"]');
+    this.birthdateInput = page.locator('[data-test="dob"]');
+    this.countrySelect = page.locator('[data-test="country"]');
+    this.postalcodeInput = page.locator('[data-test="postal_code"]');
+    this.streetnumberInput = page.locator('[data-test="house_number"]');
+    this.streetnameInput = page.locator('[data-test="street"]');
+    this.cityInput = page.locator('[data-test="city"]');
+    this.stateInput = page.locator('[data-test="state"]');
+    this.phonenumberInput = page.locator('[data-test="phone"]');
+    this.emailInput = page.locator('[data-test="email"]');
+    this.passwordInput = page.locator('[data-test="password"]');
     this.submitButton = page.locator('[data-test="register-submit"]');
+
   }
 
   // Method to fill the registration form with provided data in one go
