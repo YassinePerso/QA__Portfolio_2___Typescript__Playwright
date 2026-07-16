@@ -10,7 +10,7 @@ export class LoginPage extends BasePage {
     super(page);
     this.emailInput = page.getByPlaceholder('Votre email');
     this.passwordInput = page.getByPlaceholder('Votre mot de passe');
-    this.submitButton = page.getByRole('button', { name: 'Connexion' });
+    this.submitButton = page.locator('[data-test="login-submit"]');
   }
 
   // Fill email input
