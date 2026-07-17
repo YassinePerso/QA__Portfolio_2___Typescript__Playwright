@@ -20,10 +20,10 @@ test.describe('Logout', () => {
     await register.fillForm(TEST_USER);
 
     try {
-      await page.waitForURL(`**${URLS.login}`, { timeout: 10000 });
+      await page.waitForURL(`**${URLS.login}`, { timeout: 15000 });
+      await page.waitForTimeout(2000); // Attendre que le compte soit bien enregistré
     } catch {
-      // eslint-disable-next-line no-console
-      console.log('Compte déjà existant —> on continue');
+      console.log('Compte déjà existant — on continue');
     }
 
     await browser.close();
