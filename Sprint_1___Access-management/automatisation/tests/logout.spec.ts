@@ -22,6 +22,7 @@ test.describe('Logout', () => {
     try {
       await page.waitForURL(`**${URLS.login}`, { timeout: 10000 });
     } catch {
+      // eslint-disable-next-line no-console
       console.log('Compte déjà existant —> on continue');
     }
 
