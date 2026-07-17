@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint Sprint_1___Access-management/automatisation/**/*.ts",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:all": "playwright test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/YassinePerso/QA__Portfolio_2___Typescript__Playwright.git"
@@ -11,16 +16,21 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/YassinePerso/QA__Portfolio_2___Typescript__Playwright/issues"
   },
   "homepage": "https://github.com/YassinePerso/QA__Portfolio_2___Typescript__Playwright#readme",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.1"
+    "@types/node": "^26.1.1",
+    "@typescript-eslint/parser": "^8.64.0",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
+    "typescript-eslint": "^8.64.0"
   },
   "dependencies": {
-    "typescript": "^7.0.2"
+    "typescript": "^5.9.3"
   }
 }
