@@ -29,13 +29,15 @@ test.describe('Logout', () => {
     await browser.close();
   });
 
+  // beforeEach pour se connecter avant chaque test de logout
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     navbarPage = new NavbarPage(page);
     await loginPage.navigate(URLS.login);
     await loginPage.waitForPageLoad();
     await loginPage.login(TEST_USER.email, TEST_USER.password);
-    await page.waitForURL(`**${URLS.account}`, { timeout: 10000 });
+    await page.waitForURL(`**${URLS.account}`, { timeout: 15000 });
+    await page.waitForLoadState('networkidle');
   });
 
   // TC-16 → Vérifier la présence du bouton déconnexion

@@ -87,6 +87,7 @@ test.describe('Login', () => {
   // TC-15 → Élément propre à /account affiché après login
   test('TC-15 - Élément propre à /account affiché après login', { tag: '@smoke' }, async () => {
     await loginPage.login(TEST_USER.email, TEST_USER.password);
+    await loginPage.page.waitForURL(/account/, { timeout: 15000 });
     await expect(loginPage.page.locator('[data-test="page-title"]')).toBeVisible();
   });
 
