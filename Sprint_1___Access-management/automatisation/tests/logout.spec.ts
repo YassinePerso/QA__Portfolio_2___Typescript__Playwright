@@ -29,6 +29,7 @@ test.describe('Logout', () => {
     await browser.close();
   });
 
+  // beforeEach pour se connecter avant chaque test de logout
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     navbarPage = new NavbarPage(page);
