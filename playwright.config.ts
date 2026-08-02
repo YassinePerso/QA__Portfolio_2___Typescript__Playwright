@@ -12,7 +12,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'https://practicesoftwaretesting.com',
+    baseURL: 'https://with-bugs.practicesoftwaretesting.com/',
     trace: 'on-first-retry',
     actionTimeout: 15000,
     locale: 'fr-FR'

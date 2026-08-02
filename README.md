@@ -1,8 +1,8 @@
-# QA Portfolio — TypeScript & Playwright
+# QA Portfolio - TypeScript & Playwright
 
-Portfolio complet de test logiciel réalisé dans le cadre de la certification **Testeur Logiciel Niveau 5** (ENI École). Il couvre les phases manuelle, automatisée, CI/CD et accessibilité sur une application e-commerce de démonstration.
+Portfolio complet de test logiciel réalisé dans le cadre de la formation **Testeur Logiciel Niveau 5** au sein de l'ENI École Informatique. Il couvre les phases de tests manuels, automatisés, CI/CD et accessibilité sur une application e-commerce de démonstration.
 
-**Application testée :** [Tool Shop Demo](https://with-bugs.practicesoftwaretesting.com) — une boutique en ligne volontairement truffée de bugs, utilisée à des fins pédagogiques.
+**Application testée :** [Tool Shop Demo](https://with-bugs.practicesoftwaretesting.com) - une boutique en ligne volontairement truffée de bugs, utilisée à des fins pédagogiques.
 
 ---
 
@@ -22,10 +22,13 @@ Portfolio complet de test logiciel réalisé dans le cadre de la certification *
 
 ```
 .
-├── .github/workflows/          → Pipeline CI/CD (lint → smoke → regression → rapport)
+├── .github/workflows/                  → Pipeline CI/CD (lint → smoke → regression → rapport)
+|── Tests_Exploration                   → Session de tests d'exploration en début de projet
+│   ├──> Charte de test exploratoire                
+│   └──> Rapport d'exécution
 ├── Sprint_1_Access_Management/
-│   ├── manuel/                 → Charte, User Stories, Plan de test, Cas de test, Rapport d'exécution
-│   └── automatisation/         → Page Objects, fixtures, tests Playwright
+│   ├── manuel/                         → Charte, User Stories, Plan de test, Cas de test, Rapport d'exécution
+│   └── automatisation/                 → Page Objects, fixtures, tests Playwright
 ├── Sprint_2_Catalogue/
 │   ├── manuel/
 │   └── automatisation/
@@ -68,7 +71,7 @@ Une session de **reconnaissance globale** a été menée en amont du découpage 
 
 ## ♿ Accessibilité (RGAA)
 
-L'accessibilité est intégrée **dans chaque sprint**, pas traitée comme une phase séparée — conformément au référentiel de certification, qui demande d'exécuter des tests manuels d'accessibilité avec de vrais outils d'assistance.
+L'accessibilité est intégrée **dans chaque sprint**, pas traitée comme une phase séparée - conformément au référentiel de certification, qui demande d'exécuter des tests manuels d'accessibilité avec de vrais outils d'assistance.
 
 **Outils utilisés :**
 
@@ -79,7 +82,7 @@ L'accessibilité est intégrée **dans chaque sprint**, pas traitée comme une p
 | Orca (lecteur d'écran Linux) | Restitution vocale des messages de statut et changements de contexte |
 | Inspection visuelle | Information non donnée uniquement par la couleur |
 
-Tous les critères RGAA cités dans les cas de test sont vérifiés individuellement sur le [référentiel officiel](https://accessibilite.numerique.gouv.fr/) avant intégration — niveau (A/AA/AAA) et numéro de critère précisés pour chaque test.
+Tous les critères RGAA cités dans les cas de test sont vérifiés individuellement sur le [référentiel officiel](https://accessibilite.numerique.gouv.fr/) avant intégration - niveau (A/AA/AAA) et numéro de critère précisés pour chaque test.
 
 ---
 
@@ -87,10 +90,10 @@ Tous les critères RGAA cités dans les cas de test sont vérifiés individuelle
 
 | Sprint | Cas de test | Pass | Fail | Taux | Bugs identifiés |
 |---|---|---|---|---|---|
-| Sprint 1 — Access Management | 39 | 26 | 13 | 67% | 12 |
-| Sprint 2 — Catalogue | 47 | 26 | 21 | 55% | 14 |
-| Sprint 3 — Panier | 27 | 13 | 14 | 48% | 10 |
-| Sprint 4 — Checkout | 25 | 17 | 8 | 68% | 8 |
+| Sprint 1 → Access Management | 39 | 26 | 13 | 67% | 12 |
+| Sprint 2 → Catalogue | 47 | 26 | 21 | 55% | 14 |
+| Sprint 3 → Panier | 27 | 13 | 14 | 48% | 10 |
+| Sprint 4 → Checkout | 25 | 17 | 8 | 68% | 8 |
 | **Total** | **138** | **82** | **56** | **59%** | **44** |
 
 Dont **38 cas de test dédiés à l'accessibilité**, répartis sur les 4 sprints.
@@ -130,5 +133,5 @@ lint → tests smoke → tests de régression → publication du rapport (GitHub
 
 ## 👤 Auteur
 
-**Yassine Boulakhrif** — Testeur QA
+**Yassine Boulakhrif** → Testeur QA/Automaticien de test
 Projet réalisé dans le cadre de la certification Testeur Logiciel Niveau 5 (ENI École)
