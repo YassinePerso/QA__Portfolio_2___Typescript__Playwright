@@ -14,7 +14,7 @@
 };
 
 export const URLS = {
-  register: '/auth/register',
-  login: '/auth/login',
-  account: '/account',
+  register: '/#/auth/register',
+  login: '/#/auth/login',
+  account: '/#/account',
 };
