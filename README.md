@@ -1,4 +1,4 @@
-# QA Portfolio - TypeScript & Playwright
+# QA Portfolio #2 - TypeScript & Playwright
 
 Portfolio complet de test logiciel réalisé dans le cadre de la formation **Testeur Logiciel Niveau 5** au sein de l'ENI École Informatique. Il couvre les phases de tests manuels, automatisés, CI/CD et accessibilité sur une application e-commerce de démonstration.
 
@@ -23,11 +23,11 @@ Portfolio complet de test logiciel réalisé dans le cadre de la formation **Tes
 ```
 .
 ├── .github/workflows/                  → Pipeline CI/CD (lint → smoke → regression → rapport)
-|── Tests_Exploration                   → Session de tests d'exploration en début de projet
-│   ├──> Charte de test exploratoire                
-│   └──> Rapport d'exécution
+├── Tests_Exploration/                  → Session de reconnaissance globale en début de projet
+│   ├── Charte de test exploratoire
+│   └── Rapport de session exploratoire
 ├── Sprint_1_Access_Management/
-│   ├── manuel/                         → Charte, User Stories, Plan de test, Cas de test, Rapport d'exécution
+│   ├── manuel/                         → Charte, Rapport de session, User Stories, Plan de test, Cas de test, Rapport d'exécution
 │   └── automatisation/                 → Page Objects, fixtures, tests Playwright
 ├── Sprint_2_Catalogue/
 │   ├── manuel/
@@ -48,10 +48,11 @@ Portfolio complet de test logiciel réalisé dans le cadre de la formation **Tes
 Chaque dossier `manuel/` suit le même ordre de lecture, du prévisionnel à l'exécution :
 
 1. Charte exploratoire
-2. User Stories
-3. Plan de test
-4. Cas de test (fonctionnel + accessibilité RGAA)
-5. Rapport d'exécution
+2. Rapport de session exploratoire
+3. User Stories
+4. Plan de test
+5. Cas de test (fonctionnel + accessibilité RGAA)
+6. Rapport d'exécution
 
 ---
 
@@ -59,7 +60,7 @@ Chaque dossier `manuel/` suit le même ordre de lecture, du prévisionnel à l'e
 
 Chaque sprint suit la même démarche :
 
-1. **Session exploratoire** ciblée → charte rédigée avant la session, rapport rédigé après
+1. **Session exploratoire** ciblée → charte rédigée avant la session, rapport de session rédigé après
 2. **Conception des cas de test** → fonctionnels **et** accessibilité, avec détermination systématique Auto/Manuel avant exécution
 3. **Exécution manuelle** → documentée avec résultat obtenu, statut, et bugs associés
 4. **Automatisation** → scénarios Playwright pour les parcours critiques
@@ -86,7 +87,7 @@ Tous les critères RGAA cités dans les cas de test sont vérifiés individuelle
 
 ---
 
-## 📊 Bilan global — phase manuelle
+## 📊 Bilan global - phase manuelle
 
 | Sprint | Cas de test | Pass | Fail | Taux | Bugs identifiés |
 |---|---|---|---|---|---|
@@ -96,7 +97,7 @@ Tous les critères RGAA cités dans les cas de test sont vérifiés individuelle
 | Sprint 4 → Checkout | 25 | 17 | 8 | 68% | 8 |
 | **Total** | **138** | **82** | **56** | **59%** | **44** |
 
-Dont **38 cas de test dédiés à l'accessibilité**, répartis sur les 4 sprints.
+Dont **40 cas de test dédiés à l'accessibilité**, répartis sur les 4 sprints.
 
 ---
 
