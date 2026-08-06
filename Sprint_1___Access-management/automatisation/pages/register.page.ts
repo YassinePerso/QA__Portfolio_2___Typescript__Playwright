@@ -28,6 +28,7 @@ export class RegisterPage extends BasePage {
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly submitButton: Locator;
+  
 
   constructor(page: Page) {
     super(page);

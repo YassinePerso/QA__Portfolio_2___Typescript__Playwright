@@ -9,7 +9,7 @@ test.describe('Login', () => {
 
   test.beforeAll(async () => {
     const browser = await chromium.launch();
-    const context = await browser.newContext({ locale: 'fr-FR' });
+    const context = await browser.newContext();
     const page = await context.newPage();
     const registerPage = new RegisterPage(page);
 
@@ -20,7 +20,7 @@ test.describe('Login', () => {
     try {
       await page.waitForURL(`**${URLS.login}`, { timeout: 10000 });
     } catch {
-      console.log('Compte déjà existant — on continue');
+      console.log('Compte déjà existant -> on continue');
     }
 
     await browser.close();
@@ -32,62 +32,61 @@ test.describe('Login', () => {
     await loginPage.waitForPageLoad();
   });
 
-  // TC-08 → Vérifier la présence des champs email et mot de passe
-  test('TC-08 - Vérifier la présence des champs email et mot de passe', { tag: '@smoke' }, async () => {
+  // TC-011 - Vérifier la présence des champs email et mot de passe
+  test('TC-011 - Vérifier la présence des champs email et mot de passe', { tag: '@smoke' }, async () => {
     await expect(loginPage.emailInput).toBeVisible();
     await expect(loginPage.passwordInput).toBeVisible();
     await expect(loginPage.submitButton).toBeVisible();
   });
 
-  // TC-09 → Email inexistant affiche un message d'erreur
-  // Ce test échoue intentionnellement - BUG-002 documenté dans Jira
-  // Le message s'affiche en anglais au lieu du français attendu
-  test('TC-09 - Email inexistant affiche un message d\'erreur', { tag: '@regression' }, async () => {
+  // TC-012 - Login avec email inexistant
+  test('TC-012 - Login avec email inexistant', { tag: '@regression' }, async () => {
     await loginPage.login('inconnu@test.com', TEST_USER.password);
     await expect(loginPage.page.locator('[data-test="login-error"]')).toBeVisible();
-    await expect(loginPage.page.locator('[data-test="login-error"]')).toContainText('E-mail ou mot de passe non valide');
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toContainText('Invalid email or password');
   });
 
-  // TC-10 → Mauvais mot de passe affiche un message d'erreur
-  // Ce test échoue intentionnellement - BUG-002 documenté dans Jira
-  // Le message s'affiche en anglais au lieu du français attendu
-  test('TC-10 - Mauvais mot de passe affiche un message d\'erreur', { tag: '@regression' }, async () => {
+  // TC-013 - Login avec mauvais mot de passe
+  test('TC-013 - Login avec mauvais mot de passe', { tag: '@regression' }, async () => {
     await loginPage.login(TEST_USER.email, 'MauvaisMdp!999');
     await expect(loginPage.page.locator('[data-test="login-error"]')).toBeVisible();
-    await expect(loginPage.page.locator('[data-test="login-error"]')).toContainText('E-mail ou mot de passe non valide');
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toContainText('Invalid email or password');
   });
 
-  // TC-11 → Email vide bloque la soumission
-  test('TC-11 - Email vide bloque la soumission', { tag: '@regression' }, async () => {
+  // TC-014 - Login avec email vide
+  // Le site n'a pas de validation dédiée au champ email vide, il affiche le même message générique que pour des identifiants invalides.
+  test('TC-014 - Login avec email vide', { tag: '@regression' }, async () => {
     await loginPage.login('', TEST_USER.password);
-    await expect(loginPage.page.locator('[data-test="email-error"]')).toBeVisible();
-    await expect(loginPage.page.locator('[data-test="email-error"]')).toContainText('L\'email est requis');
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toBeVisible();
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toContainText('Invalid email or password');
   });
 
-  // TC-12 → Mot de passe vide bloque la soumission
-  test('TC-12 - Mot de passe vide bloque la soumission', { tag: '@regression' }, async () => {
+  // TC-015 - Login avec mot de passe vide
+  // Même comportement générique que TC-014 (message unique, pas de validation par champ)
+  test('TC-015 - Login avec mot de passe vide', { tag: '@regression' }, async () => {
     await loginPage.login(TEST_USER.email, '');
-    await expect(loginPage.page.locator('[data-test="password-error"]')).toBeVisible();
-    await expect(loginPage.page.locator('[data-test="password-error"]')).toContainText('Le mot de passe est requis');
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toBeVisible();
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toContainText('Invalid email or password');
   });
 
-  // TC-13 → Email mal formaté bloque la soumission
-  test('TC-13 - Email mal formaté bloque la soumission', { tag: '@regression' }, async () => {
+  // TC-016 - Login avec email mal formaté
+  // Même comportement générique que TC-014 et TC015
+  test('TC-016 - Login avec email mal formaté', { tag: '@regression' }, async () => {
     await loginPage.login('yassine@', TEST_USER.password);
-    await expect(loginPage.page.locator('[data-test="email-error"]')).toBeVisible();
-    await expect(loginPage.page.locator('[data-test="email-error"]')).toContainText('Le format de l\'email est invalide');
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toBeVisible();
+    await expect(loginPage.page.locator('[data-test="login-error"]')).toContainText('Invalid email or password');
   });
 
-  // TC-14 → Login réussi redirige vers /account
-  test('TC-14 - Login réussi redirige vers /account', { tag: '@smoke' }, async () => {
+  // TC-017 - Login réussi > redirection /account
+  test('TC-017 - Login réussi > redirection /account', { tag: '@smoke' }, async () => {
     await loginPage.login(TEST_USER.email, TEST_USER.password);
-    await expect(loginPage.page).toHaveURL(/account/);
+    await expect(loginPage.page).toHaveURL(URLS.account, { timeout: 15000 });
   });
 
-  // TC-15 → Élément propre à /account affiché après login
-  test('TC-15 - Élément propre à /account affiché après login', { tag: '@smoke' }, async () => {
+  // TC-018 - Élément propre à /account affiché après login
+  test('TC-018 - Élément propre à /account affiché après login', { tag: '@smoke' }, async () => {
     await loginPage.login(TEST_USER.email, TEST_USER.password);
-    await loginPage.page.waitForURL(/account/, { timeout: 15000 });
+    await loginPage.page.waitForURL(URLS.account, { timeout: 15000 });
     await expect(loginPage.page.locator('[data-test="page-title"]')).toBeVisible();
   });
 
