@@ -11,7 +11,7 @@ test.describe('Logout', () => {
 
   test.beforeAll(async () => {
     const browser = await chromium.launch();
-    const context = await browser.newContext({ locale: 'fr-FR' });
+    const context = await browser.newContext();
     const page = await context.newPage();
     const register = new RegisterPage(page);
 
@@ -23,7 +23,7 @@ test.describe('Logout', () => {
       await page.waitForURL(`**${URLS.login}`, { timeout: 15000 });
       await page.waitForTimeout(2000); // Attendre que le compte soit bien enregistré
     } catch {
-      console.log('Compte déjà existant — on continue');
+      console.log('Compte déjà existant > on continue');
     }
 
     await browser.close();
@@ -40,20 +40,27 @@ test.describe('Logout', () => {
     await page.waitForLoadState('networkidle');
   });
 
-  // TC-16 → Vérifier la présence du bouton déconnexion
-  test('TC-16 - Vérifier la présence du bouton déconnexion', { tag: '@smoke' }, async () => {
+  // TC-023 → Vérifier la présence du bouton de déconnexion
+  test('TC-023 - Vérifier la présence du bouton de déconnexion', { tag: '@smoke' }, async () => {
     await navbarPage.dropdownButton.click();
     await expect(navbarPage.logoutButton).toBeVisible();
   });
 
-  // TC-17 → Logout redirige vers la page d'accueil ou login
-  test('TC-17 - Logout redirige vers la page d\'accueil ou login', { tag: '@smoke' }, async () => {
+  // TC-024 → Logout → redirection vers /auth/login
+  test('TC-024 - Logout → redirection vers /auth/login', { tag: '@smoke' }, async () => {
     await navbarPage.logout();
-    await expect(navbarPage.page).toHaveURL(/auth\/login|home/);
+    await expect(navbarPage.page).toHaveURL(/auth\/login/);
   });
 
-  // TC-18 → Accès /account après logout impossible
-  test('TC-18 - Accès /account après logout impossible', { tag: '@regression' }, async () => {
+  // TC-025 → Session détruite après logout
+  test('TC-025 - Session détruite après logout', { tag: '@regression' }, async ({ page }) => {
+    await navbarPage.logout();
+    await page.goto(URLS.account);
+    await expect(page).toHaveURL(URLS.login);
+  });
+
+  // TC-026 → Accès /account après logout → impossible
+  test('TC-026 - Accès /account après logout → impossible', { tag: '@regression' }, async () => {
     await navbarPage.logout();
     await navbarPage.page.goto(URLS.account);
     await expect(navbarPage.page).toHaveURL(/auth\/login/);
