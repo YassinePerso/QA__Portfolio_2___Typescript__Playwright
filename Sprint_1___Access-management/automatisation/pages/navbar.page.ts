@@ -8,7 +8,7 @@ export class NavbarPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.dropdownButton = page.locator('[data-test="nav-menu"]');
+    this.dropdownButton = page.locator('[data-test="nav-user-menu"]');
     this.logoutButton = page.locator('[data-test="nav-sign-out"]');
   }
 
