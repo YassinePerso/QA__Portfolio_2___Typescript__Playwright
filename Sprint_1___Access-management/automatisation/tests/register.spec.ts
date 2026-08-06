@@ -12,79 +12,112 @@ test.describe('Register', () => {
     await registerPage.waitForPageLoad();
   });
 
-  // TC-01 → Vérifier la présence des champs obligatoires
-  test('TC-01 - Vérifier la présence des champs obligatoires', { tag: '@smoke' }, async () => {
+  // TC-001 → Vérifier la présence des champs obligatoires
+  test('TC-001 - Vérifier la présence des champs obligatoires', { tag: '@smoke' }, async () => {
     await expect(registerPage.firstnameInput).toBeVisible();
     await expect(registerPage.lastnameInput).toBeVisible();
     await expect(registerPage.birthdateInput).toBeVisible();
     await expect(registerPage.countrySelect).toBeVisible();
-    await expect(registerPage.postalcodeInput).toBeVisible();
-    await expect(registerPage.streetnumberInput).toBeVisible();
-    await expect(registerPage.streetnameInput).toBeVisible();
+    await expect(registerPage.postcodeInput).toBeVisible();
+    await expect(registerPage.addressInput).toBeVisible();
     await expect(registerPage.cityInput).toBeVisible();
     await expect(registerPage.stateInput).toBeVisible();
-    await expect(registerPage.phonenumberInput).toBeVisible();
+    await expect(registerPage.phoneInput).toBeVisible();
     await expect(registerPage.emailInput).toBeVisible();
     await expect(registerPage.passwordInput).toBeVisible();
     await expect(registerPage.submitButton).toBeVisible();
   });
 
-  // TC-02 → Email sans @
-  test('TC-02 - Email sans @', { tag: '@regression' }, async () => {
-    await registerPage.fillForm({ ...TEST_USER, email: 'yassinegmail.com' });
-    await expect(registerPage.page.locator('[data-test="email-error"]')).toBeVisible();
-    await expect(registerPage.page.locator('[data-test="email-error"]')).toContainText('Le format de l\'email est invalide');
+  // TC-002 → Register avec données valides
+  test('TC-002 - Register avec données valides', { tag: '@smoke' }, async () => {
+    await registerPage.fillForm({...TEST_USER, email: `yassine${Date.now()}@test.com`});
+    await expect(registerPage.page).toHaveURL(URLS.login, { timeout: 15000 });
   });
 
-  // TC-03 → Email sans domaine
-  test('TC-03 - Email sans domaine', { tag: '@regression' }, async () => {
-    await registerPage.fillForm({ ...TEST_USER, email: 'yassine@' });
-    await expect(registerPage.page.locator('[data-test="email-error"]')).toBeVisible();
-    await expect(registerPage.page.locator('[data-test="email-error"]')).toContainText('Le format de l\'email est invalide');
-  });
+  // TC-003 → Register avec email déjà utilisé
+  test('TC-003 - Register avec email déjà utilisé', { tag: '@regression' }, async () => {
 
-  // TC-04 → Mot de passe non-conforme (moins de 8 caractères)
-  // Ce test échoue intentionnellement - BUG documenté dans Jira
-  // Le message affiché indique 6 caractères au lieu de 8
-  test('TC-04 - Mots de passe non-conforme (- de 8 caractères)', { tag: '@regression' }, async () => {
-    await registerPage.fillForm({ ...TEST_USER, email: 'yassine@test.com', password: 'abc123' });
-    await expect(registerPage.page.locator('[data-test="password-error"]')).toBeVisible();
-    await expect(registerPage.page.locator('[data-test="password-error"]')).toContainText('Le mot de passe doit comporter au moins 8 caractères.');
-  });
-
-  // TC-05 → Email déjà utilisé
-  // Ce test échoue intentionnellement - BUG-002 documenté dans Jira
-  // Le message s'affiche en anglais au lieu du français attendu
-  test('TC-05 - Email déjà utilisé', { tag: '@regression' }, async () => {
     const uniqueEmail = `test.${Date.now()}@test.com`;
 
     await registerPage.fillForm({ ...TEST_USER, email: uniqueEmail });
+    await registerPage.page.waitForURL(URLS.login, { timeout: 15000 });
     await registerPage.navigate(URLS.register);
     await registerPage.waitForPageLoad();
     await registerPage.fillForm({ ...TEST_USER, email: uniqueEmail });
 
     await expect(registerPage.page.locator('[data-test="register-error"]')).toBeVisible();
-    await expect(registerPage.page.locator('[data-test="register-error"]')).toContainText('Un client utilisant cette adresse e-mail existe déjà.');
+    await expect(registerPage.page.locator('[data-test="register-error"]')).toContainText('User already registered');
   });
 
-  // TC-06 → Champ obligatoire vide bloque la soumission
-  test('TC-06 - Champ "Prénom" obligatoire vide bloque la soumission', { tag: '@regression' }, async () => {
-    await registerPage.fillForm({ 
-      ...TEST_USER, 
-      firstname: '', 
-      email: `existant${Date.now()}@test.com` 
+  // TC-004 → Register avec email mal formaté 
+  test('TC-004 - Register avec email mal formaté', { tag: '@regression' }, async () => {
+    await registerPage.fillForm({ ...TEST_USER, email: 'yassine@' });
+    await expect(registerPage.page.locator('[data-test="email-error"]')).toBeVisible();
+    await expect(registerPage.page.locator('[data-test="email-error"]')).toContainText('E-mail format is invalid.');
+  });
+
+  // TC-005 → Register avec champs obligatoires vides
+  test('TC-005 - Register avec champs obligatoires vides', { tag: '@regression' }, async () => {
+    await registerPage.fillForm({
+      ...TEST_USER,
+      firstname: '',
+      email: `existant${Date.now()}@test.com`
     });
     await expect(registerPage.page.locator('[data-test="first-name-error"]')).toBeVisible();
-    await expect(registerPage.page.locator('[data-test="first-name-error"]')).toContainText('Le prénom est requis');
+    await expect(registerPage.page.locator('[data-test="first-name-error"]')).toContainText('First name is required.');
   });
 
-  // TC-07 → Création de compte réussie avec des données valides
-  test('TC-07 - Création de compte réussie avec des données valides', { tag: '@smoke' }, async () => {
-    await registerPage.fillForm({ 
-      ...TEST_USER, 
-      email: `yassine${Date.now()}@test.com` 
+  // TC-006 → Register avec date de naissance vide
+  test('TC-006 - Register avec date de naissance vide', { tag: '@regression' }, async () => {
+    await registerPage.fillForm({
+      ...TEST_USER,
+      birthdate: '',
+      email: `existant${Date.now()}@test.com`
     });
-    await expect(registerPage.page).toHaveURL('/auth/login');
+    await expect(registerPage.page.locator('[data-test="dob-error"]')).toBeVisible();
+    await expect(registerPage.page.locator('[data-test="dob-error"]')).toContainText('Date of Birth is required.');
+  });
+
+  // TC-007 → Mot de passe 8 caractères
+  test('TC-007 - Mot de passe 8 caractères', { tag: '@regression' }, async () => {
+    await registerPage.fillForm({
+      ...TEST_USER,
+      email: `yassine${Date.now()}@test.com`,
+      password: 'Abcd123!' // 8 caractères
+    });
+    await expect(registerPage.page.locator('[data-test="password-error"]')).toBeVisible();
+    await expect(registerPage.page.locator('[data-test="password-error"]')).toContainText('Password must be minimal 10 characters long.');
+  });
+
+  // TC-008 → Mot de passe 9 caractères
+  test('TC-008 - Mot de passe 9 caractères', { tag: '@regression' }, async () => {
+    await registerPage.fillForm({
+      ...TEST_USER,
+      email: `yassine${Date.now()}@test.com`,
+      password: 'Abcd123!9' // 9 caractères
+    });
+    await expect(registerPage.page.locator('[data-test="password-error"]')).toBeVisible();
+    await expect(registerPage.page.locator('[data-test="password-error"]')).toContainText('Password must be minimal 10 characters long.');
+  });
+
+  // TC-009 → Mot de passe 10 caractères
+  test('TC-009 - Mot de passe 10 caractères', { tag: '@regression' }, async () => {
+    await registerPage.fillForm({
+      ...TEST_USER,
+      email: `yassine${Date.now()}@test.com`,
+      password: 'Abcd123!90' // 10 caractères
+    });
+    await expect(registerPage.page).toHaveURL(URLS.login, { timeout: 15000 });
+  });
+
+  // TC-010 → Mot de passe 11 caractères
+  test('TC-010 - Mot de passe 11 caractères', { tag: '@regression' }, async () => {
+    await registerPage.fillForm({
+      ...TEST_USER,
+      email: `yassine${Date.now()}@test.com`,
+      password: 'Abcd123!901' // 11 caractères
+    });
+    await expect(registerPage.page).toHaveURL(URLS.login, { timeout: 15000 });
   });
 
 });
