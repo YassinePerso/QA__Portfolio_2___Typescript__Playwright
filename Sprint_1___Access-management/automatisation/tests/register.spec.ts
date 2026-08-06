@@ -28,13 +28,13 @@ test.describe('Register', () => {
     await expect(registerPage.submitButton).toBeVisible();
   });
 
-  // TC-002 → Register avec données valides
+  // TC-002 > Register avec données valides
   test('TC-002 - Register avec données valides', { tag: '@smoke' }, async () => {
     await registerPage.fillForm({...TEST_USER, email: `yassine${Date.now()}@test.com`});
     await expect(registerPage.page).toHaveURL(URLS.login, { timeout: 15000 });
   });
 
-  // TC-003 → Register avec email déjà utilisé
+  // TC-003 > Register avec email déjà utilisé
   test('TC-003 - Register avec email déjà utilisé', { tag: '@regression' }, async () => {
 
     const uniqueEmail = `test.${Date.now()}@test.com`;
@@ -49,14 +49,14 @@ test.describe('Register', () => {
     await expect(registerPage.page.locator('[data-test="register-error"]')).toContainText('User already registered');
   });
 
-  // TC-004 → Register avec email mal formaté 
+  // TC-004 > Register avec email mal formaté 
   test('TC-004 - Register avec email mal formaté', { tag: '@regression' }, async () => {
     await registerPage.fillForm({ ...TEST_USER, email: 'yassine@' });
     await expect(registerPage.page.locator('[data-test="email-error"]')).toBeVisible();
     await expect(registerPage.page.locator('[data-test="email-error"]')).toContainText('E-mail format is invalid.');
   });
 
-  // TC-005 → Register avec champs obligatoires vides
+  // TC-005 > Register avec champs obligatoires vides
   test('TC-005 - Register avec champs obligatoires vides', { tag: '@regression' }, async () => {
     await registerPage.fillForm({
       ...TEST_USER,
@@ -67,7 +67,7 @@ test.describe('Register', () => {
     await expect(registerPage.page.locator('[data-test="first-name-error"]')).toContainText('First name is required.');
   });
 
-  // TC-006 → Register avec date de naissance vide
+  // TC-006 > Register avec date de naissance vide
   test('TC-006 - Register avec date de naissance vide', { tag: '@regression' }, async () => {
     await registerPage.fillForm({
       ...TEST_USER,
@@ -78,7 +78,7 @@ test.describe('Register', () => {
     await expect(registerPage.page.locator('[data-test="dob-error"]')).toContainText('Date of Birth is required.');
   });
 
-  // TC-007 → Mot de passe 8 caractères
+  // TC-007 > Mot de passe 8 caractères
   test('TC-007 - Mot de passe 8 caractères', { tag: '@regression' }, async () => {
     await registerPage.fillForm({
       ...TEST_USER,
@@ -89,7 +89,7 @@ test.describe('Register', () => {
     await expect(registerPage.page.locator('[data-test="password-error"]')).toContainText('Password must be minimal 10 characters long.');
   });
 
-  // TC-008 → Mot de passe 9 caractères
+  // TC-008 > Mot de passe 9 caractères
   test('TC-008 - Mot de passe 9 caractères', { tag: '@regression' }, async () => {
     await registerPage.fillForm({
       ...TEST_USER,
@@ -100,7 +100,7 @@ test.describe('Register', () => {
     await expect(registerPage.page.locator('[data-test="password-error"]')).toContainText('Password must be minimal 10 characters long.');
   });
 
-  // TC-009 → Mot de passe 10 caractères
+  // TC-009 > Mot de passe 10 caractères
   test('TC-009 - Mot de passe 10 caractères', { tag: '@regression' }, async () => {
     await registerPage.fillForm({
       ...TEST_USER,
@@ -110,7 +110,7 @@ test.describe('Register', () => {
     await expect(registerPage.page).toHaveURL(URLS.login, { timeout: 15000 });
   });
 
-  // TC-010 → Mot de passe 11 caractères
+  // TC-010 > Mot de passe 11 caractères
   test('TC-010 - Mot de passe 11 caractères', { tag: '@regression' }, async () => {
     await registerPage.fillForm({
       ...TEST_USER,

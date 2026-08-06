@@ -5,12 +5,14 @@ export class LoginPage extends BasePage {
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly submitButton: Locator;
+  readonly forgotPasswordLink: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.emailInput = page.getByPlaceholder('Votre email');
-    this.passwordInput = page.getByPlaceholder('Votre mot de passe');
+    this.emailInput = page.locator('[data-test="email"]');
+    this.passwordInput = page.locator('[data-test="password"]');
     this.submitButton = page.locator('[data-test="login-submit"]');
+    this.forgotPasswordLink = page.locator('[data-test="forgot-password-link"]');
   }
 
   // Fill email input
