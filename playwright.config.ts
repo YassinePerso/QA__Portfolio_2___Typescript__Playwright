@@ -5,7 +5,8 @@ import { defineConfig, devices } from '@playwright/test';
 declare const process: any;
 
 export default defineConfig({
-  testDir: './Sprint_1___Access-management/automatisation/tests',  
+  testDir: '.',
+  testMatch: '**/automatisation/tests/**/*.spec.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -15,7 +16,6 @@ export default defineConfig({
     baseURL: 'https://with-bugs.practicesoftwaretesting.com/',
     trace: 'on-first-retry',
     actionTimeout: 15000,
-    locale: 'fr-FR'
   },
   projects: [
     {
