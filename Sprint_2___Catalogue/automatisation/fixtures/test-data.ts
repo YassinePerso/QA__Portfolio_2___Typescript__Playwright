@@ -17,4 +17,5 @@ export const URLS = {
   register: '/#/auth/register',
   login: '/#/auth/login',
   account: '/#/account',
+  favourites: '/#/account/favorites',
 };
