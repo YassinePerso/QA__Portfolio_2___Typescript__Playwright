@@ -23,9 +23,11 @@
   "homepage": "https://github.com/YassinePerso/QA__Portfolio_2___Typescript__Playwright#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.62.1",
     "@types/node": "^26.1.1",
     "@typescript-eslint/parser": "^8.64.0",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2",
     "eslint": "^10.7.0",
     "globals": "^17.7.0",
     "typescript-eslint": "^8.64.0"
