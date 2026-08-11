@@ -40,27 +40,27 @@ test.describe('Logout', () => {
     await page.waitForLoadState('networkidle');
   });
 
-  // TC-023 - Vérifier la présence du bouton de déconnexion
+  // TC-023 → Vérifier la présence du bouton de déconnexion
   test('TC-023 - Vérifier la présence du bouton de déconnexion', { tag: '@smoke' }, async () => {
     await navbarPage.dropdownButton.click();
     await expect(navbarPage.logoutButton).toBeVisible();
   });
 
-  // TC-024 - Logout > redirection vers /auth/login
-  test('TC-024 - Logout > redirection vers /auth/login', { tag: '@smoke' }, async () => {
+  // TC-024 → Logout → redirection vers /auth/login
+  test('TC-024 - Logout → redirection vers /auth/login', { tag: '@smoke' }, async () => {
     await navbarPage.logout();
     await expect(navbarPage.page).toHaveURL(/auth\/login/);
   });
 
-  // TC-025 - Session détruite après logout
+  // TC-025 → Session détruite après logout
   test('TC-025 - Session détruite après logout', { tag: '@regression' }, async ({ page }) => {
     await navbarPage.logout();
     await page.goto(URLS.account);
     await expect(page).toHaveURL(URLS.login);
   });
 
-  // TC-026 - Accès /account après logout
-  test('TC-026 - Accès /account après logout', { tag: '@regression' }, async () => {
+  // TC-026 → Accès /account après logout → impossible
+  test('TC-026 - Accès /account après logout → impossible', { tag: '@regression' }, async () => {
     await navbarPage.logout();
     await navbarPage.page.goto(URLS.account);
     await expect(navbarPage.page).toHaveURL(/auth\/login/);
