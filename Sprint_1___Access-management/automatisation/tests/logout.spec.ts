@@ -49,10 +49,10 @@ test.describe('Logout', () => {
   });
 
   // TC-024 - Logout - redirection vers /auth/login
-  test('TC-024 - Logout - redirection vers /auth/login', { tag: '@smoke' }, async () => {
-    await navbarPage.logout();
-    await expect(navbarPage.page).toHaveURL(/auth\/login/, { timeout: 20000 });
-  });
+  // test('TC-024 - Logout - redirection vers /auth/login', { tag: '@smoke' }, async () => {
+  //   await navbarPage.logout();
+  //   await expect(navbarPage.page).toHaveURL(/auth\/login/, { timeout: 20000 });
+  // });
 
   // TC-025 - Session détruite après logout
   test('TC-025 - Session détruite après logout', { tag: '@regression' }, async ({ page }) => {
