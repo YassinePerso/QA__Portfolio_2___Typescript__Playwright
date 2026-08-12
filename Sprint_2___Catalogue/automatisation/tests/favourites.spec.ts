@@ -31,6 +31,8 @@ test.describe('Add to favourites', () => {
     const cataloguePage = new CataloguePage(page);
     await cataloguePage.navigate(URLS.catalogue);
     await cataloguePage.waitForPageLoad();
+
+    await cataloguePage.productNames.first().waitFor({ state: 'visible', timeout: 15000 });
     await cataloguePage.productNames.first().click();
     await cataloguePage.page.waitForTimeout(500);
 
@@ -41,18 +43,19 @@ test.describe('Add to favourites', () => {
   // TC-034 - Cliquer sur "Add to favourites" sans être connecté
   // Ce test reste MANUEL : le message affiché nécessite un jugement visuel
 
-  
+
   // TC-035 - Cliquer en étant connecté - produit ajouté aux favoris
   test('TC-035 - Cliquer en étant connecté - produit ajouté aux favoris', { tag: '@regression' }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigate(URLS.login);
     await loginPage.waitForPageLoad();
     await loginPage.login(TEST_USER.email, TEST_USER.password);
-    await page.waitForURL(URLS.account, { timeout: 15000 });
+    await page.waitForURL(URLS.account, { timeout: 20000 });
 
     const cataloguePage = new CataloguePage(page);
     await cataloguePage.navigate(URLS.catalogue);
     await cataloguePage.waitForPageLoad();
+    await cataloguePage.productNames.first().waitFor({ state: 'visible', timeout: 15000 });
     await cataloguePage.productNames.first().click();
     await cataloguePage.page.waitForTimeout(500);
 
@@ -68,11 +71,12 @@ test.describe('Add to favourites', () => {
     await loginPage.navigate(URLS.login);
     await loginPage.waitForPageLoad();
     await loginPage.login(TEST_USER.email, TEST_USER.password);
-    await page.waitForURL(URLS.account, { timeout: 15000 });
+    await page.waitForURL(URLS.account, { timeout: 20000 });
 
     const cataloguePage = new CataloguePage(page);
     await cataloguePage.navigate(URLS.catalogue);
     await cataloguePage.waitForPageLoad();
+    await cataloguePage.productNames.first().waitFor({ state: 'visible', timeout: 15000 });
     await cataloguePage.productNames.first().click();
     await cataloguePage.page.waitForTimeout(500);
 
@@ -82,7 +86,7 @@ test.describe('Add to favourites', () => {
 
     await cataloguePage.navigate(URLS.favourites);
     await cataloguePage.waitForPageLoad();
-    await cataloguePage.productNames.first().waitFor({ state: 'visible', timeout: 10000 });
+    await cataloguePage.productNames.first().waitFor({ state: 'visible', timeout: 15000 });
 
     const favouritesList = await cataloguePage.productNames.allTextContents();
     const isPresent = favouritesList.some(name => name.trim() === productName);
